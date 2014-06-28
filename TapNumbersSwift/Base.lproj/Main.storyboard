@@ -68,11 +68,12 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="digitLabel" destination="vBU-t4-96M" id="RKP-Nf-uW6"/>
+                        <outlet property="combinationLabel" destination="vBU-t4-96M" id="4Aa-M7-59a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="239" y="140"/>
         </scene>
     </scenes>
 </document>
