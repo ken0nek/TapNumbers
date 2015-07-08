@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     
     // show combination without [], and highlight the target number
-    func makeStringFromArray(array: Array<Int>) -> NSAttributedString {
+    func makeStringFromArray(array: [Int]) -> NSAttributedString {
         var labelText: NSMutableAttributedString = NSMutableAttributedString()
         
         for i in 0 ..< array.count {
