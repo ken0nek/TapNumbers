@@ -10,15 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var combinationLabel: UILabel
-    var combination: Int[] = [0, 0, 0, 0]
-    // var combination: Int[4] = Int[4]()
+    @IBOutlet weak var combinationLabel: UILabel!
+    var combination = [Int](count: 4, repeatedValue: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.newGame()
+        newGame()
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,19 +27,19 @@ class ViewController: UIViewController {
     
     // go next problem
     func newGame() {
-        combination = self.produceCombination()
-        combinationLabel.attributedText = self.makeStringFromArray(combination)
+        combination = produceCombination()
+        combinationLabel.attributedText = makeStringFromArray(combination)
     }
     
     // show combination without [], and highlight the target number
     func makeStringFromArray(array: Array<Int>) -> NSAttributedString {
         var labelText: NSMutableAttributedString = NSMutableAttributedString()
         
-        for var i: Int = 0; i < array.count; i++ {
+        for i in 0 ..< array.count {
             
             let attributedString = NSMutableAttributedString(string: "\(array[i])")
             
-            if i == 0 {
+            if i == 0 { // make target number red color
                 attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSMakeRange(0, 1))
             }
             
@@ -50,27 +49,29 @@ class ViewController: UIViewController {
         return labelText
     }
     
-    func produceCombination() -> Int[] {
+    // 1 ~ 4
+    func produceCombination() -> [Int] {
         
-        combination = [0, 0, 0, 0]
+        var comb = [Int]()
         
-        for var i: Int = 0; i < 4; i++ {
-            combination[i] = Int(arc4random_uniform(UInt32(4))) + 1
+        for _ in 0 ..< 4 {
+            comb.append(Int(arc4random_uniform(4)) + 1)
         }
         
-        return combination;
+        return comb
     }
     
     @IBAction func buttonPressed(button: UIButton) {
+        
         // check number
-        if combination[0] == button.tag {
+        if let number = button.titleForState(.Normal)?.toInt() {
             combination.removeAtIndex(0)
-            combinationLabel.attributedText = self.makeStringFromArray(combination)
+            combinationLabel.attributedText = makeStringFromArray(combination)
         }
         
         // if combination becomes empty, go next game
         if combination.count == 0 {
-            self.newGame()
+            newGame()
         }
     }
 }
