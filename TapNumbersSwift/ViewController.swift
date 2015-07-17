@@ -25,14 +25,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // go next problem
+    // create new game
     func newGame() {
         combination = produceCombination()
-//        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
         combinationLabel.text = makeSimpleStringFromArray(combination)
+//        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
     }
     
-    // show combination without [], and highlight the target number
+    // show combination and highlight the target(first) number
     func makeHighlightedStringFromArray(array: [Int]) -> NSAttributedString {
         var labelText = NSMutableAttributedString()
         
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         var comb = [Int]()
         
         for _ in 0 ..< 4 {
-            comb.append(Int(arc4random_uniform(4)) + 1)
+            comb.append(Int(arc4random_uniform(UInt32(4))) + 1)
         }
         
         return comb
@@ -69,12 +69,12 @@ class ViewController: UIViewController {
     
     @IBAction func buttonPressed(button: UIButton) {
         
-        // check number
+        // get the text of pressed button
         if let number = button.titleForState(.Normal)?.toInt() {
-            if number == combination.first! {
+            if number == combination.first! {  // check number
                 combination.removeAtIndex(0)
-                //            combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
                 combinationLabel.text = makeSimpleStringFromArray(combination)
+//                combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
             }
         }
         
