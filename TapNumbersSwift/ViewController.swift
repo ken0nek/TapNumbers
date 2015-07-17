@@ -50,9 +50,15 @@ class ViewController: UIViewController {
         return labelText
     }
     
-    // concatenate: Int -> String then join.
+    // concatenate: [Int] -> [String] then join.
+    // [1, 2, 4, 3] -> ["1", "2", "4", "3"] -> "1243"
     func makeSimpleStringFromArray(array: [Int]) -> String {
         return "".join(array.map{"\($0)"})
+//        var simpleString = ""
+//        for number in array {
+//            simpleString += "\(number)"
+//        }
+//        return simpleString
     }
     
     // 1 ~ 4
