@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var combinationLabel: UILabel!
-    var combination = [Int](count: 4, repeatedValue: 0)
+    var combination = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +28,13 @@ class ViewController: UIViewController {
     // go next problem
     func newGame() {
         combination = produceCombination()
-        combinationLabel.attributedText = makeStringFromArray(combination)
+//        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
+        combinationLabel.text = makeSimpleStringFromArray(combination)
     }
     
     // show combination without [], and highlight the target number
-    func makeStringFromArray(array: [Int]) -> NSAttributedString {
-        var labelText: NSMutableAttributedString = NSMutableAttributedString()
+    func makeHighlightedStringFromArray(array: [Int]) -> NSAttributedString {
+        var labelText = NSMutableAttributedString()
         
         for i in 0 ..< array.count {
             
@@ -47,6 +48,11 @@ class ViewController: UIViewController {
         }
         
         return labelText
+    }
+    
+    // concatenate: Int -> String then join.
+    func makeSimpleStringFromArray(array: [Int]) -> String {
+        return "".join(array.map{"\($0)"})
     }
     
     // 1 ~ 4
@@ -65,8 +71,11 @@ class ViewController: UIViewController {
         
         // check number
         if let number = button.titleForState(.Normal)?.toInt() {
-            combination.removeAtIndex(0)
-            combinationLabel.attributedText = makeStringFromArray(combination)
+            if number == combination.first! {
+                combination.removeAtIndex(0)
+                //            combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
+                combinationLabel.text = makeSimpleStringFromArray(combination)
+            }
         }
         
         // if combination becomes empty, go next game
