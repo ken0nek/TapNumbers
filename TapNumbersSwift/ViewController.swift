@@ -10,8 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var combinationLabel: UILabel!
-    var combination = [Int]()
+    @IBOutlet private weak var combinationLabel: UILabel!
+    private var combination = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +26,14 @@ class ViewController: UIViewController {
     }
     
     // create new game
-    func newGame() {
+    private func newGame() {
         combination = produceCombination()
         combinationLabel.text = makeSimpleStringFromArray(combination)
 //        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
     }
     
     // show combination and highlight the target(first) number
-    func makeHighlightedStringFromArray(array: [Int]) -> NSAttributedString {
+    private func makeHighlightedStringFromArray(array: [Int]) -> NSAttributedString {
         var labelText = NSMutableAttributedString()
         
         for i in 0 ..< array.count {
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
     
     // concatenate: [Int] -> [String] then join.
     // [1, 2, 4, 3] -> ["1", "2", "4", "3"] -> "1243"
-    func makeSimpleStringFromArray(array: [Int]) -> String {
+    private func makeSimpleStringFromArray(array: [Int]) -> String {
         return "".join(array.map{"\($0)"})
 //        var simpleString = ""
 //        for number in array {
@@ -62,7 +62,7 @@ class ViewController: UIViewController {
     }
     
     // 1 ~ 4
-    func produceCombination() -> [Int] {
+    private func produceCombination() -> [Int] {
         
         var comb = [Int]()
         
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         return comb
     }
     
-    @IBAction func buttonPressed(button: UIButton) {
+    @IBAction private func buttonPressed(button: UIButton) {
         
         // get the text of pressed button
         if let number = button.titleForState(.Normal)?.toInt() {
