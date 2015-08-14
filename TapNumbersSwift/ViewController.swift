@@ -33,15 +33,16 @@ class ViewController: UIViewController {
     }
     
     // show combination and highlight the target(first) number
-    private func makeHighlightedStringFromArray(array: [Int]) -> NSAttributedString {
+    private func makeHighlightedStringFromArray(array: [Int]) -> NSMutableAttributedString {
         var labelText = NSMutableAttributedString()
         
-        for i in 0 ..< array.count {
-            
-            let attributedString = NSMutableAttributedString(string: "\(array[i])")
-            
-            if i == 0 { // make target number red color
-                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSMakeRange(0, 1))
+        for i in 0..<array.count {
+        
+            let attributedString: NSAttributedString
+            if i == 0 {
+                attributedString = NSAttributedString(string: "\(array[i])", attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+            } else {
+                attributedString = NSAttributedString(string: "\(array[i])")
             }
             
             labelText.appendAttributedString(attributedString)
@@ -63,14 +64,14 @@ class ViewController: UIViewController {
     
     // 1 ~ 4
     private func produceCombination() -> [Int] {
-        
-        var comb = [Int]()
-        
-        for _ in 0 ..< 4 {
-            comb.append(Int(arc4random_uniform(UInt32(4))) + 1)
-        }
-        
-        return comb
+        return Array(0..<4).map{_ in Int(arc4random_uniform(UInt32(4))) + 1}
+//        var comb = [Int]()
+//        
+//        for _ in 0 ..< 4 {
+//            comb.append(Int(arc4random_uniform(UInt32(4))) + 1)
+//        }
+//        
+//        return comb
     }
     
     @IBAction private func buttonPressed(button: UIButton) {
@@ -85,7 +86,7 @@ class ViewController: UIViewController {
         }
         
         // if combination becomes empty, go next game
-        if combination.count == 0 {
+        if combination.isEmpty {
             newGame()
         }
     }
