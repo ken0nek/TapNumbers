@@ -34,21 +34,13 @@ class ViewController: UIViewController {
     
     // show combination and highlight the target(first) number
     private func makeHighlightedStringFromArray(array: [Int]) -> NSMutableAttributedString {
-        var labelText = NSMutableAttributedString()
-        
-        for i in 0..<array.count {
-        
-            let attributedString: NSAttributedString
-            if i == 0 {
-                attributedString = NSAttributedString(string: "\(array[i])", attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
-            } else {
-                attributedString = NSAttributedString(string: "\(array[i])")
-            }
-            
-            labelText.appendAttributedString(attributedString)
+        if array.isEmpty {
+            return NSMutableAttributedString(string: "")
         }
         
-        return labelText
+        let attributedString = NSMutableAttributedString(string: "".join(array.map{"\($0)"}))
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSMakeRange(0, 1))
+        return attributedString
     }
     
     // concatenate: [Int] -> [String] then join.
@@ -77,7 +69,7 @@ class ViewController: UIViewController {
     @IBAction private func buttonPressed(button: UIButton) {
         
         // get the text of pressed button
-        if let number = button.titleForState(.Normal)?.toInt() {
+        if let number = Int(button.titleForState(.Normal)!) {
             if number == combination.first! {  // check number
                 combination.removeAtIndex(0)
                 combinationLabel.text = makeSimpleStringFromArray(combination)
