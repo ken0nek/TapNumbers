@@ -28,19 +28,31 @@ class ViewController: UIViewController {
     // create new game
     private func newGame() {
         combination = produceCombination()
-        combinationLabel.text = makeSimpleStringFromArray(combination)
-//        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
+//        combinationLabel.text = makeSimpleStringFromArray(combination)
+        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
     }
     
     // show combination and highlight the target(first) number
     private func makeHighlightedStringFromArray(array: [Int]) -> NSMutableAttributedString {
-        if array.isEmpty {
-            return NSMutableAttributedString(string: "")
+//        if array.isEmpty {
+//            return NSMutableAttributedString(string: "")
+//        }
+//        
+//        let attributedString = NSMutableAttributedString(string: "".join(array.map{"\($0)"}))
+//        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSMakeRange(0, 1))
+//        return attributedString
+        let attributedStrings = array.enumerate().map { (i, ele) -> NSAttributedString in
+            if i == 0 {
+                return NSAttributedString(string: String(ele), attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+            } else {
+                return NSAttributedString(string: String(ele))
+            }
         }
         
-        let attributedString = NSMutableAttributedString(string: "".join(array.map{"\($0)"}))
-        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSMakeRange(0, 1))
-        return attributedString
+        return attributedStrings.reduce(NSMutableAttributedString(string: "")) { (sum, now) -> NSMutableAttributedString in
+            sum.appendAttributedString(now)
+            return sum
+        }
     }
     
     // concatenate: [Int] -> [String] then join.
@@ -72,8 +84,8 @@ class ViewController: UIViewController {
         if let number = Int(button.titleForState(.Normal)!) {
             if number == combination.first! {  // check number
                 combination.removeAtIndex(0)
-                combinationLabel.text = makeSimpleStringFromArray(combination)
-//                combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
+//                combinationLabel.text = makeSimpleStringFromArray(combination)
+                combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
             }
         }
         
