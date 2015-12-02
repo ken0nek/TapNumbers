@@ -34,13 +34,7 @@ class ViewController: UIViewController {
     
     // show combination and highlight the target(first) number
     private func makeHighlightedStringFromArray(array: [Int]) -> NSMutableAttributedString {
-//        if array.isEmpty {
-//            return NSMutableAttributedString(string: "")
-//        }
-//        
-//        let attributedString = NSMutableAttributedString(string: "".join(array.map{"\($0)"}))
-//        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSMakeRange(0, 1))
-//        return attributedString
+        
         let attributedStrings = array.enumerate().map { (i, ele) -> NSAttributedString in
             if i == 0 {
                 return NSAttributedString(string: String(ele), attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
@@ -58,24 +52,12 @@ class ViewController: UIViewController {
     // concatenate: [Int] -> [String] then join.
     // [1, 2, 4, 3] -> ["1", "2", "4", "3"] -> "1243"
     private func makeSimpleStringFromArray(array: [Int]) -> String {
-        return "".join(array.map{"\($0)"})
-//        var simpleString = ""
-//        for number in array {
-//            simpleString += "\(number)"
-//        }
-//        return simpleString
+        return array.map { String($0) }.joinWithSeparator("")
     }
     
     // 1 ~ 4
     private func produceCombination() -> [Int] {
-        return Array(0..<4).map{_ in Int(arc4random_uniform(UInt32(4))) + 1}
-//        var comb = [Int]()
-//        
-//        for _ in 0 ..< 4 {
-//            comb.append(Int(arc4random_uniform(UInt32(4))) + 1)
-//        }
-//        
-//        return comb
+        return Array(0 ..< 4).map {_ in Int(arc4random_uniform(UInt32(4))) + 1}
     }
     
     @IBAction private func buttonPressed(button: UIButton) {
