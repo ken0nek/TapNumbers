@@ -28,46 +28,44 @@ class ViewController: UIViewController {
     // create new game
     private func newGame() {
         combination = produceCombination()
-//        combinationLabel.text = makeSimpleStringFromArray(combination)
-        combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
+        combinationLabel.attributedText = makeHighlightedString(array: combination)
     }
     
     // show combination and highlight the target(first) number
-    private func makeHighlightedStringFromArray(array: [Int]) -> NSMutableAttributedString {
+    private func makeHighlightedString(array: [Int]) -> NSMutableAttributedString {
         
-        let attributedStrings = array.enumerate().map { (i, ele) -> NSAttributedString in
+        let attributedStrings = array.enumerated().map { (i, ele) -> NSAttributedString in
             if i == 0 {
-                return NSAttributedString(string: String(ele), attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+                return NSAttributedString(string: String(ele), attributes: [NSForegroundColorAttributeName: UIColor.red])
             } else {
                 return NSAttributedString(string: String(ele))
             }
         }
         
         return attributedStrings.reduce(NSMutableAttributedString(string: "")) { (sum, now) -> NSMutableAttributedString in
-            sum.appendAttributedString(now)
+            sum.append(now)
             return sum
         }
     }
     
     // concatenate: [Int] -> [String] then join.
     // [1, 2, 4, 3] -> ["1", "2", "4", "3"] -> "1243"
-    private func makeSimpleStringFromArray(array: [Int]) -> String {
-        return array.map { String($0) }.joinWithSeparator("")
+    private func makeSimpleString(array: [Int]) -> String {
+        return array.map { String($0) }.joined()
     }
     
     // 1 ~ 4
     private func produceCombination() -> [Int] {
-        return Array(0 ..< 4).map {_ in Int(arc4random_uniform(UInt32(4))) + 1}
+        return (0 ..< 4).map {_ in Int(arc4random_uniform(UInt32(4))) + 1}
     }
     
-    @IBAction private func buttonPressed(button: UIButton) {
+    @IBAction private func buttonPressed(_ button: UIButton) {
         
         // get the text of pressed button
-        if let number = Int(button.titleForState(.Normal)!) {
+        if let number = Int(button.title(for: .normal)!) {
             if number == combination.first! {  // check number
-                combination.removeAtIndex(0)
-//                combinationLabel.text = makeSimpleStringFromArray(combination)
-                combinationLabel.attributedText = makeHighlightedStringFromArray(combination)
+                combination.remove(at: 0)
+                combinationLabel.attributedText = makeHighlightedString(array: combination)
             }
         }
         
@@ -77,4 +75,3 @@ class ViewController: UIViewController {
         }
     }
 }
-
